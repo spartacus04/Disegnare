@@ -3,6 +3,7 @@ using Poligoni.DrawSettings;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Poligoni
@@ -13,7 +14,9 @@ namespace Poligoni
         {
             InitializeComponent();
             //Abilito il double buffering per rimuovere sfarfallio
-            this.DoubleBuffered = true;
+            typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
+           | BindingFlags.Instance | BindingFlags.NonPublic, null,
+            panel2, new object[] { true });
         }
 
         #region draw
