@@ -57,10 +57,13 @@ namespace Poligoni
                 //Se lo strumento selezionato non è la linea allora aggiungilo alla lista degli strumenti
                 if (Settings.currentTool != Settings.ToolType.line)
                 {
-                    Tool tool = Settings.useTool(mousePos);
-                    if (tool.canHold)
-                        isDrawing = true;
-                    toDraw.Add(tool);
+                    if((Settings.currentTool == Settings.ToolType.circle || Settings.currentTool == Settings.ToolType.polygon) && Settings.useTool(mousePos) != null)
+                    {
+                        Tool tool = Settings.useTool(mousePos);
+                        if (tool.canHold)
+                            isDrawing = true;
+                        toDraw.Add(tool);
+                    }
                 }
                 else
                 {
@@ -85,7 +88,7 @@ namespace Poligoni
                     Tool tool = Settings.useTool(mousePos);
                     if (tool.canHold)
                         isDrawing = true;
-                    toDraw.Add(tool);
+                    if (tool != null) toDraw.Add(tool);
                 }
                 else
                 {
@@ -107,6 +110,7 @@ namespace Poligoni
                 if (Settings.currentTool != Settings.ToolType.line)
                 {
                     Tool tool = Settings.useTool(mousePos);
+                    if(tool != null)
                     toDraw.Add(tool);
                 }
                 else
