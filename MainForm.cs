@@ -30,7 +30,7 @@ namespace Poligoni
             Graphics graphics = e.Graphics;
             foreach (Tool tool in toDraw)
             {
-                if (tool != null)
+                if(tool.GetType() != typeof(Pointer))
                     tool.draw(graphics);
             }
 
@@ -57,13 +57,10 @@ namespace Poligoni
                 //Se lo strumento selezionato non è la linea allora aggiungilo alla lista degli strumenti
                 if (Settings.currentTool != Settings.ToolType.line)
                 {
-                    if((Settings.currentTool == Settings.ToolType.circle || Settings.currentTool == Settings.ToolType.polygon) && Settings.useTool(mousePos) != null)
-                    {
-                        Tool tool = Settings.useTool(mousePos);
-                        if (tool.canHold)
-                            isDrawing = true;
-                        toDraw.Add(tool);
-                    }
+                    Tool tool = Settings.useTool(mousePos);
+                    if (tool.canHold)
+                        isDrawing = true;
+                    toDraw.Add(tool);
                 }
                 else
                 {

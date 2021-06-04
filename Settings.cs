@@ -34,7 +34,7 @@ namespace Poligoni.DrawSettings
                         do
                         {
                             result = ShowInputDialog(ref polyInputSides, "Inserisci il numero di lati");
-                            if (result == DialogResult.Cancel) return null;
+                            if (result == DialogResult.Cancel) return new CanvasTools.PointerT();
                         } while (!int.TryParse(polyInputSides, out lati) && !(result == DialogResult.OK));
                     } while (lati < 3); //Richiesta in input dei dati
 
@@ -43,7 +43,7 @@ namespace Poligoni.DrawSettings
                     do
                     {
                         result = ShowInputDialog(ref polyInputDim, "Inserisci la grandezza del lato");
-                        if (result == DialogResult.Cancel) return null;
+                        if (result == DialogResult.Cancel) return new CanvasTools.PointerT();
                     } while (!int.TryParse(polyInputDim, out dim) && !(result == DialogResult.OK)); //Richiesta in input dei dati
 
                     return new Polygon(point, dim * 50, color, backColor, lati);    //Disegna un poligono
@@ -56,7 +56,7 @@ namespace Poligoni.DrawSettings
                     do
                     {
                         result = ShowInputDialog(ref circleInputDim, "Inserisci il raggio");
-                        if (result == DialogResult.Cancel) return null;
+                        if (result == DialogResult.Cancel) return new CanvasTools.PointerT();
                     } while (!int.TryParse(circleInputDim, out radious) && !(result == DialogResult.OK)); //Richiesta in input dei dati
 
                     return new Circle(point, radious * 10, color, backColor);

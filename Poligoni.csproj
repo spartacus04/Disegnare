@@ -61,6 +61,7 @@
     <Compile Include="Tools\Circle.cs" />
     <Compile Include="Tools\Line.cs" />
     <Compile Include="Tools\Pencil.cs" />
+    <Compile Include="Tools\Pointer.cs" />
     <Compile Include="Tools\Polygon.cs" />
     <Compile Include="Tools\Tool.cs" />
     <EmbeddedResource Include="MainForm.resx">
