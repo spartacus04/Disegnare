@@ -30,13 +30,12 @@ namespace Poligoni
             Graphics graphics = e.Graphics;
             foreach (Tool tool in toDraw)
             {
-                if(tool.GetType() != typeof(Pointer))
-                    tool.draw(graphics);
+                tool.draw(graphics);
             }
 
-            //Disegna preview della linea
-            if (line != null && line.point2 != new Point(0, 0))
-                line.draw(graphics);
+            //Disegna preview di un oggetto
+            if (preview != null && preview.point.Count >= 2)
+                preview.draw(graphics);
         }
 
         #endregion draw
@@ -44,30 +43,19 @@ namespace Poligoni
         #region input
 
         private bool isDrawing = false;
-        private Line line;
+        private Tool preview;
 
         //Questo metodo viene richiamato ogni volta che il mouse viene premuto
         private void DrawPanel_MouseDown(object sender, MouseEventArgs e)
         {
             if (Settings.currentTool == Settings.ToolType.pointer) return;  //Se lo strumento attuale è il puntatore non eseguire il resto del metodo
-            //Controllo se il tasto premuto è il tasto di sinistra
+            //Controllo se il tasto premuto è 6il tasto di sinistra
             if (e.Button == MouseButtons.Left)
             {
                 Point mousePos = e.Location;
-                //Se lo strumento selezionato non è la linea allora aggiungilo alla lista degli strumenti
-                if (Settings.currentTool != Settings.ToolType.line)
-                {
-                    Tool tool = Settings.useTool(mousePos);
-                    if (tool.canHold)
-                        isDrawing = true;
-                    toDraw.Add(tool);
-                }
-                else
-                {
-                    //Altrimenti crea un nuovo oggetto linea che verra mostrato temporaneamente
-                    line = new Line(mousePos, new Point(0, 0), 0, Settings.color);
-                    isDrawing = line.canHold;
-                }
+                preview = Settings.useTool(mousePos);
+                isDrawing = true;
+
                 panel2.Invalidate();    //Ricarica il pannello
             }
         }
@@ -79,20 +67,20 @@ namespace Poligoni
             if (isDrawing && e.Button == MouseButtons.Left)
             {
                 Point mousePos = e.Location;
-                //Se lo strumento selezionato non è la linea allora aggiungilo alla lista degli strumenti
-                if (Settings.currentTool != Settings.ToolType.line && Settings.useTool(mousePos).canHold)
+                preview.setPoint(mousePos);
+
+                //Controllo per disegnare il poligono regolare se il tasto alt è premuto
+                if(preview.GetType() == typeof(Polygon))
                 {
-                    Tool tool = Settings.useTool(mousePos);
-                    if (tool.canHold)
-                        isDrawing = true;
-                    if (tool != null) toDraw.Add(tool);
+                    Polygon poly = (Polygon)preview;
+                    poly.setRegular(Control.ModifierKeys == Keys.Alt);
                 }
-                else
+                else if(preview.GetType() == typeof(Circle))
                 {
-                    //Altrimenti modifica la linea con la seconda posizione desiderata
-                    line = new Line(line.point, mousePos, 3, Settings.color);
-                    isDrawing = line.canHold;
+                    Circle poly = (Circle)preview;
+                    poly.setRegular(Control.ModifierKeys == Keys.Alt);
                 }
+
                 panel2.Invalidate();    //Ricarica il pannello
             }
         }
@@ -103,20 +91,41 @@ namespace Poligoni
             if (isDrawing)
             {
                 Point mousePos = e.Location;
-                //Se lo strumento selezionato non è la linea allora aggiungilo alla lista degli strumenti
-                if (Settings.currentTool != Settings.ToolType.line)
+                preview.setPoint(mousePos);
+                //Se lo strumento è un poligono richiedo in input il numero di lati e se il tasto alt è premuto (valido anche per il cerchio) disegno il poligono in modo regolare
+                if (preview.GetType() == typeof(Polygon))
                 {
-                    Tool tool = Settings.useTool(mousePos);
-                    if(tool != null)
-                    toDraw.Add(tool);
+                    Polygon poly = (Polygon)preview;
+                    poly.setRegular(Control.ModifierKeys == Keys.Alt);
+                    string sides = "";
+                    int lati = 4;
+                    do
+                    {
+                        DialogResult result;
+                        do
+                        {
+                            result = Settings.ShowInputDialog(ref sides, "Inserisci il numero di lati");
+                            if (result == DialogResult.Cancel)
+                            {
+                                preview = null;
+                                isDrawing = false;
+                                panel2.Invalidate();
+                                return;
+
+                            }
+                        } while (!int.TryParse(sides, out lati) && !(result == DialogResult.OK));
+                    } while (lati < 3 && poly != null); //Richiesta in input dei dati
+
+                    poly.setSides(lati);
                 }
-                else
+                else if (preview.GetType() == typeof(Circle))
                 {
-                    //Altrimenti modifica la linea e poi la aggiunge alla lista degli oggetti da disegnare
-                    line = new Line(line.point, mousePos, 3, Settings.color);
-                    toDraw.Add(line);
-                    line = null;
+                    Circle poly = (Circle)preview;
+                    poly.setRegular(Control.ModifierKeys == Keys.Alt);
                 }
+
+                toDraw.Add(preview);
+                preview = null;
                 panel2.Invalidate();    //Ricarica il pannello
 
                 isDrawing = false;

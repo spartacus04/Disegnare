@@ -1,24 +1,32 @@
 ﻿using System.Drawing;
+using Poligoni.DrawSettings;
 
 namespace Poligoni.CanvasTools
 {
     internal class Line : Tool
     {
-        public Point point2;
 
-        public Line(Point _point, Point _point2, int _size, Color _color)
+        public Line(Point _point, Color _color)
         {
-            point = _point;
-            point2 = _point2;
-            size = _size;
+            point = new System.Collections.Generic.List<Point>();
+            point.Add(_point);
+
             color = _color;
-            canHold = true;
+        }
+
+        public override void setPoint(Point _point)
+        {
+            if (point.Count == 1)
+                point.Add(_point);
+            else
+                point[1] = _point;
         }
 
         public override void draw(Graphics g)
         {
             //Disegna una riga di un certo colore
-            g.DrawLine(new Pen(color, size), point, point2);
+            if(point.Count == 2)
+                g.DrawLine(new Pen(color, Settings.lineStrenght), point[0], point[1]);
         }
     }
 }

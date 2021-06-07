@@ -1,4 +1,5 @@
 ﻿using Poligoni.CanvasTools;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -11,64 +12,30 @@ namespace Poligoni.DrawSettings
         static public Color color = Color.Black;
         static public Color backColor = Color.White;
         static public ToolType currentTool = ToolType.pointer;
+        static public int lineStrenght = 3;
 
-        public static Tool useTool(Point point)
+        public static Tool useTool(Point point, Tool _tool = null)
         {
-            DialogResult result;
 
             //In questo switch non è presente il case 2 dato che viene gestito nella classe del form
             switch ((int)currentTool)
             {
-                case 0:
-                    return null;    //Il puntatore non ha utilizzo quindi il metodo restituisce null
                 case 1:
-                    return new Pencil(point, 5, color); //Restituisce una un quadrato
+                    return new Pencil(point, color); //Restituisce una un quadrato
+                case 2:
+                    return new Line(point, color);
                 case 3:
-                    string polyInputSides = "", polyInputDim = "";
-                    int lati, dim;
-
-                    result = DialogResult.Ignore;
-
-                    do
-                    {
-                        do
-                        {
-                            result = ShowInputDialog(ref polyInputSides, "Inserisci il numero di lati");
-                            if (result == DialogResult.Cancel) return new CanvasTools.PointerT();
-                        } while (!int.TryParse(polyInputSides, out lati) && !(result == DialogResult.OK));
-                    } while (lati < 3); //Richiesta in input dei dati
-
-                    result = DialogResult.Ignore;
-
-                    do
-                    {
-                        result = ShowInputDialog(ref polyInputDim, "Inserisci la grandezza del lato");
-                        if (result == DialogResult.Cancel) return new CanvasTools.PointerT();
-                    } while (!int.TryParse(polyInputDim, out dim) && !(result == DialogResult.OK)); //Richiesta in input dei dati
-
-                    return new Polygon(point, dim * 50, color, backColor, lati);    //Disegna un poligono
+                    return new Polygon(point, color, backColor);    //Disegna un poligono
                 case 4:
-                    string circleInputDim = "";
-                    int radious;
-
-                    result = DialogResult.Ignore;
-
-                    do
-                    {
-                        result = ShowInputDialog(ref circleInputDim, "Inserisci il raggio");
-                        if (result == DialogResult.Cancel) return new CanvasTools.PointerT();
-                    } while (!int.TryParse(circleInputDim, out radious) && !(result == DialogResult.OK)); //Richiesta in input dei dati
-
-                    return new Circle(point, radious * 10, color, backColor);
-
+                    return new Circle(point, color, backColor);
                 case 5:
-                    return new Pencil(point, 25, Color.White);  //Restituisce un quadrato bianco, che disegnato sopra gli altri elementi funziona come gomma
+                    return new Pencil(point, Color.White, true);  //Restituisce un quadrato bianco, che disegnato sopra gli altri elementi funziona come gomma
             }
             return null;
         }
 
         //Questo metodo viene usato per richiedere in input un determinato valore tramite una dialogbox
-        private static DialogResult ShowInputDialog(ref string input, string question)
+        public static DialogResult ShowInputDialog(ref string input, string question)
         {
             System.Drawing.Size size = new System.Drawing.Size(300, 100);
             Form inputBox = new Form();
