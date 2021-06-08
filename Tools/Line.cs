@@ -6,12 +6,12 @@ namespace Poligoni.CanvasTools
     internal class Line : Tool
     {
 
-        public Line(Point _point, Color _color)
+        public Line(Point _point, Color _color, int _lineThickness = 0)
         {
             point = new System.Collections.Generic.List<Point>();
             point.Add(_point);
-
             color = _color;
+            lineThickness = _lineThickness == 0 ? DrawSettings.Settings.lineStrenght : _lineThickness;
         }
 
         public override void setPoint(Point _point)
@@ -26,7 +26,7 @@ namespace Poligoni.CanvasTools
         {
             //Disegna una riga di un certo colore
             if(point.Count == 2)
-                g.DrawLine(new Pen(color, Settings.lineStrenght), point[0], point[1]);
+                g.DrawLine(new Pen(color, lineThickness), point[0], point[1]);
         }
     }
 }

@@ -6,14 +6,15 @@ namespace Poligoni.CanvasTools
 {
     internal class Polygon : Tool
     {
-        public int sides = 4;
+        public int sides = 100;
 
-        public Polygon(Point _point, Color _color, Color _backColor)
+        public Polygon(Point _point, Color _color, Color _backColor, int _lineThickness = 0)
         {
             point = new System.Collections.Generic.List<Point>();
             point.Add(_point);
             color = _color;
             backColor = _backColor;
+            lineThickness = _lineThickness == 0 ? DrawSettings.Settings.lineStrenght : _lineThickness;
         }
 
         public void setSides(int _sides)
@@ -73,7 +74,7 @@ namespace Poligoni.CanvasTools
                 }
 
                 //Disegna il poligono
-                g.DrawPolygon(new Pen(color, DrawSettings.Settings.lineStrenght), toDraw.ToArray());
+                g.DrawPolygon(new Pen(color, lineThickness), toDraw.ToArray());
                 g.FillPolygon(new SolidBrush(backColor), toDraw.ToArray());
             }
         }

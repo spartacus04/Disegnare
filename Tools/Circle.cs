@@ -5,12 +5,13 @@ namespace Poligoni.CanvasTools
     internal class Circle : Tool
     {
 
-        public Circle(Point _point, Color _color, Color _backColor)
+        public Circle(Point _point, Color _color, Color _backColor, int _lineThickness = 0)
         {
             point = new System.Collections.Generic.List<Point>();
             point.Add(_point);
             color = _color;
             backColor = _backColor;
+            lineThickness = _lineThickness == 0 ? DrawSettings.Settings.lineStrenght : _lineThickness;
         }
 
         public override void setPoint(Point _point)
@@ -42,7 +43,7 @@ namespace Poligoni.CanvasTools
             //Disegna un cerchio
             if(point.Count == 2)
             {
-                g.DrawEllipse(new Pen(color, DrawSettings.Settings.lineStrenght), point[0].X - size.Width, point[0].Y - size.Height, size.Width * 2, size.Height * 2);
+                g.DrawEllipse(new Pen(color, lineThickness), point[0].X - size.Width, point[0].Y - size.Height, size.Width * 2, size.Height * 2);
                 g.FillEllipse(new SolidBrush(backColor), point[0].X - size.Width, point[0].Y - size.Height, size.Width * 2, size.Height * 2);
             }
         }

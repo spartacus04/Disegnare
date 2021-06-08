@@ -10,6 +10,7 @@ namespace Poligoni.CanvasTools
         public Size size { get; set; }
         public Color color { get; set; }
         public Color backColor { get; set; }
+        public int lineThickness { get; set; }
 
         public abstract void setPoint(Point _point);
         public abstract void draw(Graphics g);

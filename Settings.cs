@@ -29,7 +29,7 @@ namespace Poligoni.DrawSettings
                 case 4:
                     return new Circle(point, color, backColor);
                 case 5:
-                    return new Pencil(point, Color.White, true);  //Restituisce un quadrato bianco, che disegnato sopra gli altri elementi funziona come gomma
+                    return new Pencil(point, Color.White, true, 25);  //Restituisce un quadrato bianco, che disegnato sopra gli altri elementi funziona come gomma
             }
             return null;
         }

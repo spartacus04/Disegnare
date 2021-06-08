@@ -31,6 +31,8 @@ namespace Poligoni
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ThicknessUpDown = new System.Windows.Forms.NumericUpDown();
+            this.CleanButton = new System.Windows.Forms.Button();
             this.ForeColorButton = new System.Windows.Forms.Button();
             this.backColorButton = new System.Windows.Forms.Button();
             this.RubberButton = new System.Windows.Forms.Button();
@@ -41,12 +43,15 @@ namespace Poligoni
             this.selectButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ThicknessUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel1.Controls.Add(this.ThicknessUpDown);
+            this.panel1.Controls.Add(this.CleanButton);
             this.panel1.Controls.Add(this.ForeColorButton);
             this.panel1.Controls.Add(this.backColorButton);
             this.panel1.Controls.Add(this.RubberButton);
@@ -57,14 +62,49 @@ namespace Poligoni
             this.panel1.Controls.Add(this.selectButton);
             this.panel1.Location = new System.Drawing.Point(13, 23);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(40, 415);
+            this.panel1.Size = new System.Drawing.Size(40, 539);
             this.panel1.TabIndex = 0;
+            // 
+            // ThicknessUpDown
+            // 
+            this.ThicknessUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ThicknessUpDown.Location = new System.Drawing.Point(4, 438);
+            this.ThicknessUpDown.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
+            this.ThicknessUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ThicknessUpDown.Name = "ThicknessUpDown";
+            this.ThicknessUpDown.Size = new System.Drawing.Size(33, 20);
+            this.ThicknessUpDown.TabIndex = 9;
+            this.ThicknessUpDown.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.ThicknessUpDown.ValueChanged += new System.EventHandler(this.ThicknessUpDown_ValueChanged);
+            // 
+            // CleanButton
+            // 
+            this.CleanButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.CleanButton.Image = ((System.Drawing.Image)(resources.GetObject("CleanButton.Image")));
+            this.CleanButton.Location = new System.Drawing.Point(4, 379);
+            this.CleanButton.Name = "CleanButton";
+            this.CleanButton.Size = new System.Drawing.Size(33, 33);
+            this.CleanButton.TabIndex = 8;
+            this.CleanButton.UseVisualStyleBackColor = true;
+            this.CleanButton.Click += new System.EventHandler(this.CleanButton_Click);
             // 
             // ForeColorButton
             // 
             this.ForeColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ForeColorButton.BackColor = System.Drawing.Color.Black;
-            this.ForeColorButton.Location = new System.Drawing.Point(4, 340);
+            this.ForeColorButton.Location = new System.Drawing.Point(4, 464);
             this.ForeColorButton.Name = "ForeColorButton";
             this.ForeColorButton.Size = new System.Drawing.Size(33, 33);
             this.ForeColorButton.TabIndex = 7;
@@ -75,7 +115,7 @@ namespace Poligoni
             // 
             this.backColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.backColorButton.BackColor = System.Drawing.Color.White;
-            this.backColorButton.Location = new System.Drawing.Point(4, 379);
+            this.backColorButton.Location = new System.Drawing.Point(4, 503);
             this.backColorButton.Name = "backColorButton";
             this.backColorButton.Size = new System.Drawing.Size(33, 33);
             this.backColorButton.TabIndex = 6;
@@ -151,7 +191,7 @@ namespace Poligoni
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Location = new System.Drawing.Point(60, 23);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(728, 415);
+            this.panel2.Size = new System.Drawing.Size(868, 539);
             this.panel2.TabIndex = 2;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawPanel_Paint);
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DrawPanel_MouseDown);
@@ -162,12 +202,13 @@ namespace Poligoni
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(940, 574);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "MainForm";
             this.Text = "Disegno - Andrea Bonari Classe 3AI";
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ThicknessUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -184,6 +225,8 @@ namespace Poligoni
         private System.Windows.Forms.Button penButton;
         private System.Windows.Forms.Button ForeColorButton;
         private System.Windows.Forms.Button backColorButton;
+        private System.Windows.Forms.Button CleanButton;
+        private System.Windows.Forms.NumericUpDown ThicknessUpDown;
     }
 }
 

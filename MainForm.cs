@@ -98,7 +98,7 @@ namespace Poligoni
                     Polygon poly = (Polygon)preview;
                     poly.setRegular(Control.ModifierKeys == Keys.Alt);
                     string sides = "";
-                    int lati = 4;
+                    int lati = 100;
                     do
                     {
                         DialogResult result;
@@ -194,6 +194,17 @@ namespace Poligoni
             }
         }
 
+        private void CleanButton_Click(object sender, EventArgs e)
+        {
+            toDraw.Clear();
+            panel2.Invalidate();
+        }
+
         #endregion UI
+
+        private void ThicknessUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            Settings.lineStrenght = (int)ThicknessUpDown.Value;
+        }
     }
 }
